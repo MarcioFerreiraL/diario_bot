@@ -14,6 +14,7 @@ TERMOS_CEPE = [
 # Monitoramento no Diário Municipal (AMUPE)
 TERMOS_AMUPE = [
     "MARCIO FERREIRA LIMA",
-    "Surubim processo seletivo",
-    "Surubim resultado processo seletivo"
-]
+    "processo seletivo",
+    "resultado final",
+    "resultado preliminar"
+    ]
