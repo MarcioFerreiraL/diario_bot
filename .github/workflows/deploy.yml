@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,9 +18,9 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }} # <-- ADICIONADO AQUI
           source: "."
-          # ATENÇÃO AQUI: Atualizado para o nome correto da pasta
-          target: "~/diario_oficial_bot" 
+          target: "~/diario_oficial_bot"
           rm: false 
           strip_components: 0
 
@@ -29,8 +30,8 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            # ATENÇÃO AQUI: Atualizado para o nome correto da pasta
             cd ~/diario_oficial_bot
             
             # Recria o arquivo .env no servidor usando as Secrets do GitHub
