@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  diario-bot:
+    build: .
+    container_name: monitor_diario_oficial
+    restart: unless-stopped
+    environment:
+      - TZ=America/Recife
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    volumes:
+      - ./.env:/app/.env
