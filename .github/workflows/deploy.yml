@@ -9,16 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar o código do repositório
-        uses: actions/checkout@v4
-
       - name: Copiar arquivos para a VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }} # <-- ADICIONADO AQUI
           source: "."
           target: "~/diario_oficial_bot"
           rm: false 
@@ -30,13 +26,8 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd ~/diario_oficial_bot
-            
-            # Recria o arquivo .env no servidor usando as Secrets do GitHub
             echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" > .env
             echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
-            
-            # Faz o build da nova imagem e sobe o container
             docker compose up -d --build
