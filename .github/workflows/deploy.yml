@@ -19,7 +19,8 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "."
-          target: "~/diario_bot"
+          # ATENÇÃO AQUI: Atualizado para o nome correto da pasta
+          target: "~/diario_oficial_bot" 
           rm: false 
           strip_components: 0
 
@@ -30,9 +31,12 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/diario_bot
+            # ATENÇÃO AQUI: Atualizado para o nome correto da pasta
+            cd ~/diario_oficial_bot
             
+            # Recria o arquivo .env no servidor usando as Secrets do GitHub
             echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" > .env
             echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
             
+            # Faz o build da nova imagem e sobe o container
             docker compose up -d --build
